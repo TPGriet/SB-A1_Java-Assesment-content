@@ -1,1 +1,415 @@
+1. /* We are given a number, and we need to check whether the given number is a magic number or not. 
+A number is said to be a magic number if the product of sum of its digits and the reverse of the sum is equal to the given number.
+
+example:
+1729 is a magic number.
+Since, 1+7+2+9=19 and 19*91=1729.
+
+183 is not a magic number.
+Since, 1+8+3=12 and 12*21 != 183
+
+Test cases examples:
+-----------------
+case=t1
+input=1729
+output=1729 is a Magic Number
+
+case=t2
+input=183
+output=183 is not a Magic Number
+
+case=t3
+input=371
+output=371 is not a Magic Number
+
+case=t4
+input=53
+output=53 is not a Magic Number
+
+case=t5
+input=89
+output=89 is not a Magic Number
+
+case=t7
+fail message="hidden test case"
+input=1458
+output=1458 is a Magic Number
+
+
+PROGRAM:
+-----------------------
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+     
+        int n = input.nextInt();
+        int temp = n;
+        int rev = 0;
+        int sum = 0;
+
+        while (temp > 0) 
+        {
+            sum = sum + temp % 10;
+            temp = temp / 10;
+        }
+        temp = sum;
+
+        while (temp > 0)
+        {
+            rev = rev * 10 + temp % 10;
+            temp = temp / 10;
+        }
+
+        if (rev * sum == n) {
+            System.out.println(n + " is a Magic Number.");
+        } else {
+            System.out.println(n + " is not a Magic Number.");
+        }
+
+        input.close();
+    }
+}
+
+
+
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+     
+        int n = input.nextInt();
+        int temp = n;
+        int sum = 0;
+
+        while (temp > 0) 
+        {
+            sum = sum + temp % 10;
+            temp = temp / 10;
+        }
+
+        StringBuilder rev = new StringBuilder(Integer.toString(sum)).reverse();
+        int rev = Integer.parseInt(rev.toString());
+
+        if (rev * sum == n) {
+            System.out.println(n + " is a Magic Number.");
+        } else {
+            System.out.println(n + " is not a Magic Number.");
+        }
+
+        input.close();
+    }
+}
+
+
+2. /* 
+Given x number of 1's followed by y number of 0's, your task is to find the decimal representation of the x and y.
+
+Test case example:
+------------------
+case=t1
+input=3 2
+output=Decimal representation: 28
+
+case=t2
+input=5 4
+output=Decimal representation: 496
+
+case=t3
+input=0 10
+output=Decimal representation: 0
+
+case=t4
+fail message="hidden test case"
+input=2 0
+output=Decimal representation: 3
+
+case=t5
+input=15 7
+output=Decimal representation: 4194176
+
+case=t6
+input=1 1
+output=Decimal representation: 2
+
+
+
+PROGRAM:
+---------------------------
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int x = scanner.nextInt();
+
+        int y = scanner.nextInt();
+
+         int decimal = (1 << x) - 1; 
+         decimal <<= y; 
+
+
+        System.out.println("Decimal representation: " + decimal);
+    }
+}
+
+
+/*
+import java.math.BigInteger;
+import java.util.*;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger x = scanner.nextBigInteger();
+        BigInteger y = scanner.nextBigInteger();
+
+        BigInteger decimal = BigInteger.ONE.shiftLeft(x.intValue()).subtract(BigInteger.ONE).shiftLeft(y.intValue());
+
+        System.out.println("Decimal representation: " + decimal);
+    }
+}*/
+
+
+3. /* Write a Java Program to find the minimum number of bits required to represent the
+given integer number. with the following exception handling:
+
+if the input is negative throw IllegalArgumentException with the following error message:
+"Please enter a positive integer"
+
+if the input is invalid or exceeds the integer range throw IllegalArgumentException with the error message:
+"Wrong input. Please enter a valid integer"
+
+To handle above exceptions there should be single catch and try block.
+
+Test case example:
+----------------------
+case=t1
+input=
+127
+output=
+Total number of bits required = 7
+
+case=t2
+input=
+13
+output=
+Total number of bits required = 4
+
+case=t3
+input=
+1
+output=
+Total number of bits required = 1
+
+case=t4
+input=
+6
+output=
+Total number of bits required = 3
+
+case=t5
+input=abc100
+output=Wrong input. Please enter a valid integer.
+
+case=t6
+input=-596
+output=Please enter a positive integer.
+
+
+case=t5
+fail message="hidden test case"
+input=arun100
+output=Wrong input. Please enter a valid integer.
+
+PROGRAM:
+-----------------------------
+import java.util.*;
+
+public class Solution {
+    public static int count(int num) {
+        if (num == 0) {
+            return 1;
+        }
+
+        int c= 0;
+        while (num!= 0)
+        {
+            c++;
+            num >>= 1;
+        }
+        return c;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = 0;
+        try {
+            if (scanner.hasNextInt())
+            {
+                num = scanner.nextInt();
+                if (num <= 0) 
+                {
+                    throw new IllegalArgumentException("Please enter a positive integer.");
+                }
+                int bits = count(num);
+                  int bits1 = (int)(Math.log(num) / Math.log(2)) + 1;
+                System.out.println("Total number of bits required = " + bits1);
+            } else {
+                throw new IllegalArgumentException("Wrong input. Please enter a valid integer.");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+
+/*import java.util.*;
+
+public class Solution {
+ 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = 0;
+        try {
+            if (scanner.hasNextInt())
+            {
+                num = scanner.nextInt();
+                if (num <= 0) 
+                {
+                    throw new IllegalArgumentException("Please enter a positive integer.");
+                }
+                
+                  int bits = (int)(Math.log(num)/Math.log(2)) + 1;
+                  
+                System.out.println("Total number of bits required = " + bits);
+            } else {
+                throw new IllegalArgumentException("Wrong input. Please enter a valid integer.");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}*/
+
+4. /* There are n stairs, a person standing at the bottom wants to climb stairs to reach the nth stair.
+The person can climb either byt taking 1 jump, 2 jump or 3 jump at a time to reach the nth stair,
+Write a java method to find the number of combination of jumps the persons can have to reach the nth stair.
+
+Test case example:
+----------------------
+case=t1
+input=4
+output=The possible combination of jumps to reach 4 stairs: 7
+
+case=t2
+input=5
+output=The possible combination of jumps to reach 5 stairs: 13
+
+
+case=t3
+fail message="hidden test case"
+input=10
+output=The possible combination of jumps to reach 10 stairs: 274
+
+
+case=t3
+input=6
+output=The possible combination of jumps to reach 6 stairs: 24
+
+Explaination:
+----------------
+(1, 1, 1, 1)
+(1, 1, 2)
+(2, 1, 1)
+(1, 2, 1)
+(2, 2)
+(3, 1)
+(1, 3)
+
+PROGRAM:
+------------------------
+import java.util.*;
+class Solution {
+   
+    static int possiblejumps(int s) {
+        if (s <= 1) {
+            return 1; 
+        }
+
+        int[] ways = new int[s + 1];
+        ways[0] = 1;
+        ways[1] = 1;
+        ways[2] = 2;
+
+        for (int i = 3; i <= s; i++) {
+            ways[i] = ways[i - 1] + ways[i - 2] + ways[i - 3];
+        }
+
+        return ways[s];
+    }
+
+    public static void main(String args[]) {
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        System.out.println("The possible combination of jumps to reach " +n+ " stairs = " + possiblejumps(n));
+    }
+}
+
+5. /* 
+Hour glass number pattern omini cloud
+
+Testcases:
+-----------------
+
+PROGRAM:
+------------------------
+import java.io.*;
+public class Solution
+{
+	// Function definition
+	static void pattern(int rows_no)
+	{
+		int i, j, k;
+	
+		for (i = 1; i <= rows_no; i++) {
+
+			for (k = 1; k < i; k++)
+				System.out.print(" ");
+		
+			for (j = i; j <= rows_no; j++)
+				System.out.print(j + " ");
+	
+			System.out.println();
+		}
+
+		for (i = rows_no - 1; i >= 1; i--)
+		{
+			for (k = 1; k < i; k++)
+				System.out.print(" ");
+	
+			for (j = i; j <= rows_no; j++)
+				System.out.print(j + " ");
+	
+			System.out.println();
+		}
+	}
+	
+	public static void main (String[] args)
+	{
+		// taking rows value from the user
+		int rows_no = 5;
+		pattern(rows_no);
+	
+	}
+}
+
 
