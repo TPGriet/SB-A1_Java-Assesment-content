@@ -1,0 +1,268 @@
+1. /* Write a Java Program to check next smallest beautiful number from the given number !!
+A number is called beautiful if, for every digit x in the number, there are x occurrences of it in the number.
+Example: 
+1 is beautiful because 1 has 1 occurrence. 3133 is beautiful because 1 has 1 occurrence and 3 has 3 occurrences.
+224 is not beautiful because 4 does not have 4 occurrences. 
+
+Note:Implement all the invalid cases given in the sample test cases using exception handling!!
+
+Test case examples:
+-----------------------
+case=t1
+input=192
+output=The smallest beautiful number greater than 192 is: 212
+
+case=t2
+input=10293
+output=The smallest beautiful number greater than 10293 is: 14444
+
+case=t3
+input=1345
+output=The smallest beautiful number greater than 1345 is: 3133
+
+case=t4
+fail message="hidden case"
+input=12
+output=The smallest beautiful number greater than 12 is: 22
+
+case=t5
+input=0
+output=Zero is not allowed as input.
+
+case=t6
+input=ARUN1661
+output=
+Invalid input. Please enter a valid integer.
+
+case=t7
+input=267
+output=The smallest beautiful number greater than 267 is: 333
+
+
+PROGRAM:
+-------------------------------------
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+             int n = scanner.nextInt();
+            if (n == 0) {
+                throw new IllegalArgumentException("Zero is not allowed as input.");
+            } else {
+                int smallest = findSmallestBeautifulNumber(n);
+                System.out.println("The smallest beautiful number greater than " + n + " is: " + smallest);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid integer");
+        } catch(IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static int findSmallestBeautifulNumber(int n) {
+        int num = n + 1;
+        while (true) {
+            if (isBeautifulNumber(num)) {
+                return num;
+            }
+            num++;
+        }
+    }
+
+    public static boolean isBeautifulNumber(int num) {
+        String str = String.valueOf(num);
+        int[] counts = new int[10];
+
+        for (int i = 0; i < str.length(); i++) {
+            int digit = str.charAt(i) - '0';
+         
+            
+            counts[digit]++;
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            int digit = str.charAt(i) - '0';
+
+            if (counts[digit] != digit) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+2. /* Implement removekdigits function in java. Given a non negative integer number 'n' your job is to remove 'K' digits from the number,
+such that the remaining number is the smallest integer number possible.
+
+Note:Any leading zeroes can be omitted.
+
+input format: Enter the input number followed by the K digits. 
+
+Hint: Read the number as string and K as int. Store the temp result using StringBuilder class,
+      explore charAt and deleteCharAt and append string functions to implement the logic.
+      Convert the result string back to the integer and print the result as number.
+
+Observe all the test cases given below to understand the complete logic:
+
+Test case examples:
+-----------------------
+case=t1
+input=149811 3
+output=111
+
+case=t2
+input=1002991 3               
+output=21
+
+case=t3
+input=10002134 4
+output=1
+
+case=t4
+fail message="hidden test case"
+input=1998 4
+output=0
+
+case=t5
+input=123456 2
+output=1234
+
+case=t6
+fail message="hidden test case"
+input=12345678 3
+output=12345
+
+case=t7
+input=18754 5
+output=0
+
+PROGRAM:
+------------------------
+import java.util.Scanner;
+
+public class Solution {
+    public static String removekdigits(String num, int k) {
+        int n = num.length();
+        if (n == k) {
+            return "0";
+        }
+
+        StringBuilder res = new StringBuilder();
+
+        for (char d : num.toCharArray()) {
+            while (k > 0 && res.length() > 0 && d < res.charAt(res.length() - 1)) {    //164, first iteration, res=1
+                res.deleteCharAt(res.length() - 1);                                    //2nd iteration, res=16
+                k--;                                                                   //3rd iteration, 4<6 hence delete 6
+            } 
+            if ((res.length() == 0 && d == '0') == false) {        //1000234                      //current res=14
+                res.append(d);
+            }
+        }
+
+        while (k > 0 && res.length() > 0) {                         //12345
+            res.deleteCharAt(res.length() - 1);                                   
+            k--;
+        }
+
+        return (res.length() == 0 ? "0" : res.toString());
+    }
+
+    public static void main(String[] args) {
+       // Solution sol = new Solution();
+        Scanner sc = new Scanner(System.in);
+
+            String s = sc.next();
+            int k = sc.nextInt();
+
+            String result = removekdigits(s, k);
+            System.out.println(result);
+            sc.close();
+    }
+        
+}
+
+
+3. /* 
+Given n number of integer values in arraylist, sort the elements while removing the duplicates. 
+Also find the 2nd smallest and 2nd largest element in the arraylist.
+
+Input format: read 'n' then read n number of integer values.
+
+Note: Implement the exception handling situations as mentioned in the test cases:
+
+Test case examples:
+-----------------------
+case=t1
+input=7
+3 7 5 45 45 78 10
+output=
+Sorted data: [3, 5, 7, 10, 45, 78]
+Second Largest Element: 45
+Second Smallest Element: 5
+
+case=t2
+grade reduction=10%
+input=4
+1 4 32 1
+output=
+Sorted data: [1, 4, 32]
+Second Largest Element: 4
+Second Smallest Element: 1
+
+PROGRAM:
+------------------------------
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.InputMismatchException;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        List<Integer> list = new ArrayList<Integer>();
+
+            int n = sc.nextInt();
+            for (int i = 0; i < n; i++) {
+                try {
+                    int ele = sc.nextInt();
+                    list.add(ele);
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter an integer.");
+                    sc.next(); 
+                    i--; 
+                }
+            }
+                List<Integer> sorted = list.stream()
+                    .distinct()
+                    .sorted()
+                    .collect(Collectors.toList());
+                    
+            if (sorted.size() < 2) {
+                System.out.println("Atleast 2 unique elements are required");
+            }else{
+                int small = list.stream()
+                    .sorted((a,b) -> a - b)
+                    .skip(1)
+                    .findFirst()
+                    .get();
+                    
+                int large = list.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+
+            System.out.println("Sorted data: " + sorted);
+            System.out.println("Second Largest Element: " + large);
+            System.out.println("Second Smallest Element: " + small);
+            }
+
+        } 
+        }
+
+        sc.close();
+    }
+}
+
+/*a - b calculates the difference between a and b. (sorts data in ascending order)
+When the difference is positive (i.e., a is greater than b), it indicates that a should come after b in the sorted order.
+When the difference is negative (i.e., b is greater than a), it indicates that b should come after a in the sorted order.*/
