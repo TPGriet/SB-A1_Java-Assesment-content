@@ -266,3 +266,59 @@ public class Solution {
 /*a - b calculates the difference between a and b. (sorts data in ascending order)
 When the difference is positive (i.e., a is greater than b), it indicates that a should come after b in the sorted order.
 When the difference is negative (i.e., b is greater than a), it indicates that b should come after a in the sorted order.*/
+
+4. Given a string, insert (dash) i.e - before and after every vowel in the string.
+If the string contains numbers, insert * before and after every digit in the string.
+
+Testcase examples:
+---------------------------
+case=t1
+input=Arunkumar 1CSE6                                                                 
+output=
+-A-r-u-nk-u-m-a-r *1*CS-E-*6*  
+
+case=t2
+input=Griet College 50085                                                             
+output=
+Gr-i--e-t C-o-ll-e-g-e- *5**0**0**8**5* 
+
+case=t3
+input=1661 
+output=
+*1**6**6**1* 
+
+case=t4
+input=This is Java Programming
+output=
+Th-i-s -i-s J-a-v-a- Pr-o-gr-a-mm-i-ng
+
+case=t5
+fail message="hidden test case"
+grade reduction=10%
+input=Ack5kongi7griet7
+output=
+-A-ck*5*k-o-ng-i-*7*gr-i--e-t*7*
+
+PROGRAM:
+------------------------------------
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        sc.close();
+
+        String result = dashstar(input);
+
+        System.out.println(result);
+    }
+
+    private static String dashstar(String input) {
+        String res = input.replaceAll("(?i)[aeiou]", "-$0-");
+        res = res.replaceAll("\\d", "*$0*");
+
+        return res;
+    }
+}
+
