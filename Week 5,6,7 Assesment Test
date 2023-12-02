@@ -1,1 +1,781 @@
+1. /*
+Given a Class named as Cricketers below, Implement another class called as IPLteams.
+with members: TeamName and list to store cricketers who are part of the particular IPLteam.
+It should have necessary constructor to initialize team name and valid getter and setter methods
+to add cricketer into the cricketer list,get the name of the IPL Team and get the list of cricketers
+who are added in the particular team.
+
+Use the following Menu options to Implement the complete logic:
+            /*System.out.println("1. Add a cricketer");
+            System.out.println("2. Assign a cricketer to an IPL team");
+            System.out.println("3. Display IPL Team Squads");
+            System.out.println("4. Display All list of Cricketers");
+            System.out.println("5. Display All IPLTeams");
+            System.out.println("Exit");
+
+Note: The list of IPL teams should be consisting of only following 3 teams:
+         Royal Challengers Bangalore
+         Sunrisers Hyderabad
+         Mumbai Indians
+
+class Cricketer {
+    private String name;
+    private int age;
+    private String role;
+
+    public Cricketer(String name, int age, String role) {
+        this.name = name;
+        this.age = age;
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    
+    }
+}
+
+Input format: for choice 1. enter the name of the player, age and role
+              for choice 2, enter name of the player and IPL team name to add to the squad.
+              choice 3, will display list of IPL Team squads as given in the test case.
+              choice 4, will display list of all cricketers.
+              choice 5, should display list of IPL Teams.
+Test case examples:
+----------------------
+case=t1
+input=1
+Virat Kohli
+35
+Batsman
+1
+Rohit Sharma
+33
+Opener
+1
+Jadeja
+29
+All rounder
+3
+2
+virat kohli
+Royal Challengers bangalore
+4
+5
+6
+output=
+
+Cricketer added.
+Cricketer added.
+Cricketer added.
+
+IPL Team Squads:
+Mumbai Indians Squad:
+No cricketers in this squad.
+Sunrisers Hyderabad Squad:
+No cricketers in this squad.
+Royal Challengers Bangalore Squad:
+No cricketers in this squad.
+
+Cricketer assigned to Royal Challengers Bangalore
+
+List of Cricketers:
+Name: Virat Kohli, Role: Batsman
+Name: Rohit Sharma, Role: Opener
+Name: Jadeja, Role: All rounder
+
+List of IPL Teams:
+Mumbai Indians
+Sunrisers Hyderabad
+Royal Challengers Bangalore
+
+case=t2
+input=2 
+6
+output=
+Please add cricketers and IPL teams first.
+
+case=t3
+input=4
+6
+output=
+No cricketers available.
+
+case=t4
+input=5
+4
+3
+2
+1
+Virat Kohli
+35
+Batsman
+4
+2
+virat kohli
+royal challengers bangalore
+6
+output=
+List of IPL Teams:
+Mumbai Indians
+Sunrisers Hyderabad
+Royal Challengers Bangalore
+No cricketers available.
+
+IPL Team Squads:
+Mumbai Indians Squad:
+No cricketers in this squad.
+Sunrisers Hyderabad Squad:
+No cricketers in this squad.
+Royal Challengers Bangalore Squad:
+No cricketers in this squad.
+
+Please add cricketers and IPL teams first.
+
+Cricketer added.
+
+List of Cricketers:
+Name: Virat Kohli, Role: Batsman
+
+Cricketer assigned to Royal Challengers Bangalore
+
+case=t5
+fail message="hidden test case"
+input=3
+6
+output=
+IPL Team Squads:
+Mumbai Indians Squad:
+No cricketers in this squad.
+Sunrisers Hyderabad Squad:
+No cricketers in this squad.
+Royal Challengers Bangalore Squad:
+No cricketers in this squad.
+
+
+PROGRAM:
+-----------------------------
+import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
+
+
+class IPLTeam {
+    private String teamName;
+    private List<Cricketer> squad;
+
+    public IPLTeam(String teamName) {
+        this.teamName = teamName;
+         squad = new ArrayList<>();
+    }
+
+     public void addCricketer(Cricketer cricketer) {
+        squad.add(cricketer);
+    }
+
+    public List<Cricketer> getSquad() {
+        return squad;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<Cricketer> cricketers = new ArrayList<>();
+        List<IPLTeam> iplTeams = new ArrayList<>();
+
+        IPLTeam rcb = new IPLTeam("Royal Challengers Bangalore");
+        IPLTeam srh = new IPLTeam("Sunrisers Hyderabad");
+        IPLTeam mi = new IPLTeam("Mumbai Indians");
+        
+        iplTeams.add(mi);
+        iplTeams.add(srh);
+        iplTeams.add(rcb);
+        
+        int choice;
+        
+        while(true) {
+            /*System.out.println("1. Add a cricketer");
+            System.out.println("2. Assign a cricketer to an IPL team");
+            System.out.println("3. Display IPL Team Squads");
+            System.out.println("4. Display All list of Cricketers");
+            System.out.println("5.Exit");*/
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    scanner.nextLine();
+                    //System.out.println("Enter cricketer name:");
+                    String cricketerName = scanner.nextLine();
+                    // System.out.println("Enter cricketer age:");
+                    int cricketerAge = scanner.nextInt();
+                    scanner.nextLine(); 
+                    //System.out.println("Enter cricketer role:");
+                    String cricketerRole = scanner.nextLine();
+
+                    Cricketer cr = new Cricketer(cricketerName, cricketerAge, cricketerRole);
+                    cricketers.add(cr);
+                    System.out.println("Cricketer added.");
+                    break;
+
+                case 2:
+                    scanner.nextLine();
+                    if (cricketers.isEmpty() || iplTeams.isEmpty()) {
+                        System.out.println("Please add cricketers and IPL teams first.");
+                        break;
+                    }
+
+                    //System.out.println("Enter the name of the cricketer you want to assign to team:");
+                    String str1 = scanner.nextLine();
+                    Cricketer assignCr = null;
+                    for (Cricketer i : cricketers) {
+                        if (i.getName().equalsIgnoreCase(str1)) {
+                            assignCr = i;
+                            break;
+                        }
+                    }
+                    if (assignCr == null) {
+                        System.out.println("Cricketer not found.");
+                        break;
+                    }
+                    String str2 = scanner.nextLine();
+                    boolean assigned = false;
+                    for (IPLTeam i : iplTeams) {
+                        if (i.getTeamName().equalsIgnoreCase(str2)) {
+                            i.addCricketer(assignCr);
+                            System.out.println("Cricketer assigned to " + i.getTeamName());
+                            assigned = true;
+                            break;
+                        }
+                    }
+                    if (!assigned) {
+                        System.out.println("Invalid IPL team.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("IPL Team Squads:");
+                    for (IPLTeam i : iplTeams) {
+                        System.out.println(i.getTeamName() + " Squad:");
+                        List<Cricketer> squad = i.getSquad();
+                        if (squad.isEmpty()) {
+                            System.out.println("No cricketers in this squad.");
+                        } else {
+                            for (Cricketer c : squad) {
+                                System.out.println("Name: " + c.getName() + ", Role: " + c.getRole());
+                            }
+                        }
+                    }
+                    break;
+
+                case 4: if (cricketers.isEmpty()) {
+                        System.out.println("No cricketers available.");
+                        break;
+                    }
+                    System.out.println("List of Cricketers:");
+                    for (Cricketer cricketer : cricketers) {
+                        System.out.println("Name: " + cricketer.getName() + ", Role: " + cricketer.getRole());
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("List of IPL Teams:");
+                    for (IPLTeam iplTeam : iplTeams) {
+                        System.out.println(iplTeam.getTeamName());
+                    }
+                    break;
+               
+                case 6:scanner.close();
+                System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } 
+    }
+}
+
+2. Implement a Shopping Cart APP in java
+-----------------------------------------------
+Given the following class Item.java. 
+-------------------------------------
+class Item {
+    private String name;
+    private double price;
+
+    public Item(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+    public String getName() {
+        return name;
+    }
+    public double getPrice() {
+        return price;
+    }
+}
+
+Create another class named as Solution.java. and implement Shopping Cart.
+
+Assume there are Only 3 Possible Carts: GROCERY, ELECTRONICS AND CLOTHING
+
+Discounts on each Cart should be applied:
+GROCERY - 10% on overall Cart Bill.
+CLOTHING- 20% on overall Cart Bill.
+ELECTRONICS- 30% on overall Cart Bill.
+
+Use following Menu Driven Approach:
+------------------------------------
+1. Grocery Cart
+2. Electronics Cart
+3. Clothing Cart
+4. Place Order
+5. Exit
+
+Input format: 
+----------------
+Enter the choice(1 to 3) for the cart on first line.
+Enter the name of the product and price of the product on same line. (Name of the product without spaces)
+
+choice 4 is for Placing the Order.
+If the User enters Choice 4,
+--------------------------- 
+Another input should be read from the user indicating from which cart to place the order.
+for example if the user enters "grocery", all the items in grocery cart should be considered.
+
+Before Placing the order in each cart, ask the user if he/she wants to remove any existing item from the cart, (press yes/no)
+If so, remove the item and then place the order after considering the overall discount for each cart as mentioned above.
+
+After Placing the order from any cart, Display the message,
+Order Placed!! Thank you!!
+and in next line, display the following message,
+
+Do you want to Order from Other Carts? 
+
+if user presses "yes" then continue ordering from other carts.
+or else display the following message and go back to main site:
+
+Returning to Main Site. Continue Shopping
+
+Note: 
+If the user enters, invalid cart names "apart from grocery, electronics and clothing" or if the cart is empty,
+display the following message and return to main site:
+
+"Can't Place Order: Cart is Either empty or Invalid Cart"
+"Returning to Main Site: Continue Shopping"
+
+If the user presses 5 from main menu site then the program should terminate!!
+
+Test Case Example:
+-------------------
+input=1
+Milk 30
+1
+CurryLeaves 12.56
+1
+Bournville 79
+2
+BoatHeadphone 899
+2
+penDrive 399
+4
+grocery
+no
+continue
+electronics
+yes
+pendrive
+continue
+clothing
+5
+output=
+Welcome to the Shopping App!
+Available Carts: Grocery, Electronics, Clothes
+Choose a Cart to Add Products:
+
+1. Grocery Cart
+2. Electronics Cart
+3. Clothing Cart
+4. Place Order
+
+Milk has been added to the cart GROCERY
+CurryLeaves has been added to the cart GROCERY
+Bournville has been added to the cart GROCERY
+BoatHeadphone has been added to the cart ELECTRONICS
+penDrive has been added to the cart ELECTRONICS
+
+Order Summary:
+Items in the grocery Cart:
+- Milk : Rs.30.0/-
+- CurryLeaves : Rs.12.56/-
+- Bournville : Rs.79.0/-
+
+GROCERY CART - Total Bill (10% discount applied): Rs.109.40/-
+
+Order Placed!!Thank You!!!
+
+pendrive has been removed from the cart
+
+Order Summary:
+Items in the electronics Cart:
+- BoatHeadphone : Rs.899.0/-
+
+ELECTRONICS CART - Total Bill (10% discount applied): Rs.719.20/-
+
+Order Placed!!Thank You!!!
+
+Can't Place Order: Cart is Either empty or Invalid Cart
+Returning to Main Site: Continue Shopping
+
+Exiting Shopping App
+
+
+Test Case Example 2:
+----------------------------
+case=t1
+input=
+1
+Milk 45
+1
+CurryLeaves 12.5
+1
+Bournville 79
+2
+Headphones 399
+2
+PenDrive 29
+4
+grocery
+no
+continue
+electronics
+remove
+pendrive
+continue
+clothing
+5
+output=
+Welcome to the Shopping App!
+Available Carts: Grocery, Electronics, Clothes
+Choose a Cart to Add Products:
+
+1. Grocery Cart
+2. Electronics Cart
+3. Clothing Cart
+4. Place Order
+5. Exit 
+
+Milk has been added to the cart GROCERY
+CurryLeaves has been added to the cart GROCERY
+Bournville has been added to the cart GROCERY
+Headphones has been added to the cart ELECTRONICS
+
+PenDrive has been added to the cart ELECTRONICS
+
+Order Summary:
+Items in the grocery Cart:
+- Milk : Rs.45.0/-
+- CurryLeaves : Rs.12.5/-
+- Bournville : Rs.79.0/-
+
+GROCERY CART - Total Bill (10% discount applied): Rs.122.85/-
+
+Order Placed!!Thank You!!!
+
+pendrive has been removed from the cart
+
+Order Summary:
+Items in the electronics Cart:
+- Headphones : Rs.399.0/-
+
+ELECTRONICS CART - Total Bill (20% discount applied): Rs.319.20/-
+
+Order Placed!!Thank You!!!
+
+Can't Place Order: Cart is Either empty or Invalid Cart
+
+Returning to Main Site: Continue Shopping
+Exiting Shopping App
+
+case=t2
+input=
+1
+MILk 50
+1
+bread 456.4
+4
+grocery
+remove
+milk
+no
+5
+output=
+Welcome to the Shopping App!
+Available Carts: Grocery, Electronics, Clothes
+Choose a Cart to Add Products:
+
+1. Grocery Cart
+2. Electronics Cart
+3. Clothing Cart
+4. Place Order
+5. Exit
+
+MILk has been added to the cart GROCERY
+bread has been added to the cart GROCERY
+milk has been removed from the cart
+
+Order Summary:
+Items in the grocery Cart:
+- bread : Rs.456.4/-
+
+GROCERY CART - Total Bill (10% discount applied): Rs.410.76/-
+
+Order Placed!!Thank You!!!
+
+Returning to Main Site. Continue Shopping
+
+Exiting Shopping App
+
+
+case=t3
+input=
+4
+grocery
+3
+Jeans 1299
+3
+Tshirt 499
+3
+Jacket 1599
+4
+clothing
+remove
+jacket
+no
+5
+output=
+Welcome to the Shopping App!
+Available Carts: Grocery, Electronics, Clothes
+Choose a Cart to Add Products:
+
+1. Grocery Cart
+2. Electronics Cart
+3. Clothing Cart
+4. Place Order
+5. Exit
+
+Can't Place Order: Cart is Either empty or Invalid Cart
+Returning to Main Site: Continue Shopping
+Jeans has been added to the cart CLOTHING
+Tshirt has been added to the cart CLOTHING
+Jacket has been added to the cart CLOTHING
+jacket has been removed from the cart
+Order Summary:
+Items in the clothing Cart:
+- Jeans : Rs.1299.0/-
+- Tshirt : Rs.499.0/-
+CLOTHING CART - Total Bill (30% discount applied): Rs.1258.60/-
+Order Placed!!Thank You!!!
+Returning to Main Site. Continue Shopping
+Exiting Shopping App
+
+
+PROGRAM:
+-----------------------------
+import java.util.*;
+
+
+public class Solution {
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        TreeMap<String, List<Item>> carts = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        carts.put("Grocery", new ArrayList<>());
+        carts.put("Electronics", new ArrayList<>());
+        carts.put("Clothing", new ArrayList<>());
+
+        System.out.println("Welcome to the Shopping App!");
+        System.out.println("Available Carts: Grocery, Electronics, Clothes");
+        System.out.println("Choose a Cart to Add Products:");
+        System.out.println("\n1. Grocery Cart");
+        System.out.println("2. Electronics Cart");
+        System.out.println("3. Clothing Cart");
+        System.out.println("4. Place Order");
+        System.out.println("5. Exit\n");
+        while (true) {
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
+                case 1:
+                    addItemToCart(carts.get("grocery"),"GROCERY");
+                    break;
+                case 2:
+                    addItemToCart(carts.get("Electronics"),"ELECTRONICS");
+                    break;
+                case 3:
+                    addItemToCart(carts.get("Clothing"),"CLOTHING");
+                    break;
+                case 4:
+                    placeOrder(carts);
+                    break;
+                case 5:sc.close();
+                    System.out.println("Exiting Shopping App");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please choose a valid option.");
+            }
+        }
+    }
+
+    private static void addItemToCart(List<Item> cart, String cartName) {
+       // System.out.println("Enter the name of the product:");
+        String itemName = sc.next();
+        double itemPrice = sc.nextDouble();
+      
+        Item item = new Item(itemName, itemPrice);
+        cart.add(item);
+        System.out.println(itemName + " has been added to the cart "+cartName);
+    }
+
+    private static double calculateTotal(List<Item> cart) {
+        return cart.stream().mapToDouble(Item::getPrice).sum();
+    }
+
+    private static void removeItemFromCart(List<Item> cart, String itemName) {
+        cart.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
+        System.out.println(itemName + " has been removed from the cart");
+    }
+
+    private static void placeOrder(TreeMap<String, List<Item>> carts) {
+        while (true) {
+            //System.out.println("\nEnter Cart Name to Place Order:");
+            /*System.out.println("Grocery");
+            System.out.println("Electronics");
+            System.out.println("Clothing");*/
+            String cartName = sc.nextLine();
+            List<Item> selectedCart = carts.get(cartName);
+            if (selectedCart == null || selectedCart.isEmpty()) {
+                System.out.println("Can't Place Order: Cart is Either empty or Invalid Cart");
+                System.out.println("Returning to Main Site: Continue Shopping");
+                break;
+            }
+            double total = calculateTotal(selectedCart);
+           // System.out.println("Do you want to remove any product from the " + cartName + " Cart? (remove/no)");
+            String remove = sc.nextLine().toLowerCase();
+            if (remove.equals("remove")) {
+               // System.out.println("Enter the name of the product to remove:");
+                String itemToRemove = sc.nextLine();
+                removeItemFromCart(selectedCart, itemToRemove);
+                total = calculateTotal(selectedCart);
+            }
+            double discount = 0.0;
+            if (cartName.equalsIgnoreCase("Grocery")) {
+                discount = 0.1;
+            } else if (cartName.equalsIgnoreCase("Electronics")) {
+                discount = 0.2;
+            } else if (cartName.equalsIgnoreCase("Clothing")) {
+                discount = 0.3;
+            }
+            double discountedTotal = total * (1 - discount);
+            System.out.println("\nOrder Summary:");
+            
+            System.out.println("Items in the " + cartName + " Cart:");
+            for (Item item : selectedCart) {
+                System.out.println("- " + item.getName() + " : Rs." + item.getPrice() + "/-");
+            }
+            // selectedCart.stream().forEach(item -> System.out.println("- "+ item.getName()+" "+ item.getPrice()));
+            
+            System.out.printf("\n%s CART - Total Bill (%d%% discount applied): Rs.%.2f/-\n", cartName.toUpperCase(), (int)(discount * 100), discountedTotal);
+            System.out.println("\nOrder Placed!!Thank You!!!");
+          
+            //System.out.println("Do you want to Order from Other Carts? (continue/no)");
+            String continueShopping = sc.nextLine().toLowerCase();
+            if (continueShopping.equals("no")) {
+                System.out.println("Returning to Main Site. Continue Shopping");
+                break;
+            }
+        }
+    }
+}
+
+3. /*
+/* Given an array arr[] of size N having integer elements,
+
+you need to find elder brother of each element in the array,
+
+Elder brother is an element in the array which is the nearest element on the right which is greater than the current element.
+
+If there does not exist next elder brother element, then it should be set as -1.
+
+For example, elder brother of the last element is always -1.
+
+Test Case Example:
+----------------------
+case=t1
+input=4
+2 1 7 9
+output=
+Elder Brothers: 7 7 9 -1 
+
+case=t2
+input=5
+1 2 3 4 5
+output=
+Elder Brothers: 2 3 4 5 -1 
+
+PROGRAM:
+-------------------------------
+import java.util.Scanner;
+import java.util.Stack;
+
+public class players {
+    public static int[] nextGreaterElements(int[] arr) {
+        int n = arr.length;
+        int[] result = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
+                result[stack.pop()] = arr[i];
+            }
+            stack.push(i);
+        }
+
+        while (!stack.isEmpty()) {
+            result[stack.pop()] = -1;
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+
+        int[] output = nextGreaterElements(arr);
+
+        System.out.print("Elder Brothers: ");
+        for (int i : output) {
+            System.out.print(i + " ");
+        }
+    }
+}
 
