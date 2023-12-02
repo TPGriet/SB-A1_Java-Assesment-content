@@ -1,1 +1,326 @@
+1. Create an Employee class with three private variables id, name and age.
+Create getters & setters and a parameterized constructor.
+
+Create an another class players.java from which u need to access the Employee class details.
+
+and use Predicate class, to filter and display the name of the employees whose age is less than 30.
+
+Note: your main class should be players.java
+
+input format: Enter n to indicate number of players data to be entered.
+after tat on each line, enter id, name and age of the players in that order.
+
+Test Case Example:
+----------------------
+case=t1
+input=3
+101
+Virat
+33
+102
+Rohit
+33
+103
+Gill
+27
+output=Players List:
+Name: Virat, Age: 33, Id: 101
+Name: Rohit, Age: 33, Id: 102
+Name: Gill, Age: 27, Id: 103
+
+Cricketers with age less than 30: [Gill]
+
+case=t2
+input=4
+46
+Kohli
+33
+78
+rohit
+30
+89
+gill
+23
+101
+Ishan Kishan
+24
+output=
+Players List:
+Name: Kohli, Age: 33, Id: 46
+Name: rohit, Age: 30, Id: 78
+Name: gill, Age: 23, Id: 89
+Name: Ishan Kishan, Age: 24, Id: 101
+
+Cricketers with age less than 30: [gill, Ishan Kishan]
+
+
+case=t3
+fail message="hidden test case"
+input=4
+47
+Kohli
+29
+78
+rohit
+30
+90
+gill
+23
+101
+Ishan Kishan
+24
+output=
+Players List:
+Name: Kohli, Age: 29, Id: 47
+Name: rohit, Age: 30, Id: 78
+Name: gill, Age: 23, Id: 90
+Name: Ishan Kishan, Age: 24, Id: 101
+
+Cricketers with age less than 30: [Kohli, gill, Ishan Kishan]
+
+case=t4
+input=2
+46
+virat
+33
+67
+rohit sharma
+32
+output=
+Players List:
+Name: virat, Age: 33, Id: 46
+Name: rohit sharma, Age: 32, Id: 67
+
+Cricketers with age less than 30: []
+
+PROGRAM:
+--------------------------------
+import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.Scanner;
+
+class Employee {
+    private final int id;
+    private final String name;
+    private final int age;
+
+    Employee(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String toString() {
+        return "Name: " + name + ", Age: " + age + ", Id: " + id;
+    }
+}
+
+class players {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Employee> list = new ArrayList<>();
+
+        int n=scanner.nextInt();
+        for (int i = 1; i <= n; i++) { 
+            int id = scanner.nextInt();
+           scanner.nextLine();                                    //consume newline
+            String name = scanner.nextLine();
+            int age = scanner.nextInt();
+            Employee e=new Employee(id,name,age);
+            list.add(e);
+        }
+        
+          // System.out.println(list);                             //printing all list objects at a time
+
+        System.out.println("Players List:");
+        for (Employee c : list) {
+            System.out.println(c);
+        }
+
+        Predicate<Integer> p = i -> i < 30;
+        ArrayList<String> res = new ArrayList<>();
+        for (Employee i : list) {
+            if (p.test(i.getAge()))
+                res.add(i.getName());
+        }
+        System.out.println();
+        System.out.println("Cricketers with age less than 30: " + res);
+    }
+}
+
+2. Find if a given phone number is valid jio phone number or valid indian phone number or
+not using regular expression. 
+
+conditions:
+----------------------
+Valid indian phone numbers are prefixed with +91 and must include excatly 10 digits after the +91.
+Assume: Valid Jio numbers begin with 66 after +91.
+
+
+Test Case Example:
+----------------------
+case=t1
+input= +917019572678
+output= Valid Indian Phone Number
+
+case=t2
+input=+817038598342
+output= Invalid Phone Number
+
+case=t3
+input=+91888349016534
+output= Invalid Phone Number
+
+case=t4
+grade reduction=10%
+fail message="hidden test case"
+input=+7189375989123
+output= Invalid Phone Number
+
+case=t5
+input= +916657812390
+output= Valid Jio Phone Number
+
+case=t6
+input= +816657812390
+output= Invalid Phone Number
+
+case=t7
+grade reduction=10%
+fail message="hidden case"
+input= +917019045555
+output= Valid Indian Phone Number
+
+PROGRAM:
+---------------------------------
+import java.util.Scanner;
+import java.util.regex.*;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String num = sc.nextLine().trim();
+        
+        IndianNumber(num); 
+        
+        sc.close(); 
+    }
+
+    public static void IndianNumber(String num) {
+        String p = "^(\\+91(66)?\\d{8}|\\+91\\d{10})$";
+    
+        if (Pattern.matches(p, num)) {
+            if (num.startsWith("+91")) {
+                if (num.startsWith("+9166")) {
+                    System.out.println("Valid Jio Phone Number.");
+                } else {
+                    System.out.println("Valid Indian Phone Number.");
+                }
+            }
+        } else {
+            System.out.println("Invalid Phone Number.");
+        }
+    }
+}
+
+3. Implement removekdigits function in java. Given a non negative integer number 'n' your job is to remove 'K' digits from the number,
+such that the remaining number is the smallest integer number possible.
+
+Note:Any leading zeroes can be omitted.
+
+input format: Enter the input number followed by the K digits. 
+
+Hint: Read the number as string and K as int. Store the temp result using StringBuilder class,
+      explore charAt and deleteCharAt and append string functions to implement the logic.
+      Convert the result string back to the integer and print the result as number.
+
+Observe all the test cases given below to understand the complete logic:
+
+Test case examples:
+-----------------------
+case=t1
+input=149811 3
+output=111
+
+case=t2
+input=1002991 3               //here after removing 3 digits which are 1,9,9 the remaining digit is 0021, after omitting 00, final output is 21. 
+ output=21
+
+case=t3
+input=10002134 4
+output=1
+
+case=t4
+fail message="hidden test case"
+input=1998 4
+output=0
+
+case=t5
+input=123456 2
+output=1234
+
+case=t6
+fail message="hidden test case"
+input=12345678 3
+output=12345
+
+case=t7
+input=18754 5
+output=0
+
+
+PROGRAM:
+--------------------------------
+
+import java.util.Scanner;
+public class Solution {
+    public static String removekdigits(String num, int k) {
+        int n = num.length();
+        if (n == k) {
+            return "0";
+        }
+
+        StringBuilder res = new StringBuilder();
+
+        for (char d : num.toCharArray()) {
+            while (k > 0 && res.length() > 0 && d < res.charAt(res.length() - 1)) {    //164, first iteration, res=1
+                res.deleteCharAt(res.length() - 1);                                    //2nd iteration, res=16
+                k--;                                                                   //3rd iteration, 4<6 hence delete 6
+            } 
+            if ((res.length() == 0 && d == '0') == false) {        //1000234                      //current res=14
+                res.append(d);
+            }
+        }
+
+        while (k > 0 && res.length() > 0) {                         //12345
+            res.deleteCharAt(res.length() - 1);                                   
+            k--;
+        }
+
+        return (res.length() == 0 ? "0" : res.toString());
+    }
+
+    public static void main(String[] args) {
+       // Solution sol = new Solution();
+        Scanner sc = new Scanner(System.in);
+
+            String s = sc.next();
+            int k = sc.nextInt();
+
+            String result = removekdigits(s, k);
+            System.out.println(result);
+            sc.close();
+    }
+        
+}
+
+
 
