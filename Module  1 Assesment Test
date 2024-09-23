@@ -173,6 +173,22 @@ public class Solution{
     }
 }*/
 
+/*import java.math.BigInteger;
+import java.util.*;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger x = scanner.nextBigInteger();
+        BigInteger y = scanner.nextBigInteger();
+
+        BigInteger decimal = BigInteger.ONE.shiftLeft(x.intValue());
+        BigInteger res=decimal.subtract(BigInteger.ONE);
+        BigInteger res2=res.shiftLeft(y.intValue());
+
+        System.out.println("Decimal representation: " + res2);
+    }*/
+
 
 3. /* Write a Java Program to find the minimum number of bits required to represent the
 given integer number. with the following exception handling:
